@@ -80,17 +80,6 @@ This will create the following tables:
 - `recipe_ingredients` - Relationship between recipes and ingredients (with quantities)
 
 
-### 9. Compile assets
-
-For development:
-```bash
-npm run dev
-```
-
-For production:
-```bash
-npm run build
-```
 
 ## Running the Server
 
