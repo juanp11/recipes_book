@@ -26,6 +26,23 @@
                 </div>
             @enderror
             </div>
+            <div class="mb-3">
+                <label for="unit" class="form-label">Unit</label>
+                <select class="form-select" id="unit" name="unit">
+                    <option value="">Select unit</option>
+                    <option value="grams">Grams</option>
+                    <option value="kilograms">Kilograms</option>
+                    <option value="liters">Liters</option>
+                    <option value="milliliters">Milliliters</option>
+                    <option value="pieces">Pieces</option>
+                    <option value="cups">Cups</option>
+                </select>
+                @error('unit')
+                <div class="error">
+                    <p style="color: red">{{ $message }}</p>
+                </div>
+            @enderror
+            </div>
             <button type="submit" class="btn btn-primary">Submit</button>
             <a href="{{  route('ingredients.index') }}" class="btn btn-danger">Back</a>
         </form>

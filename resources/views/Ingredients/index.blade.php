@@ -5,9 +5,6 @@
     <div class="container text-center">
         <h1 class="mt-4">Ingredients Page</h1>
     </div>
-    <div class="container text-center mt-5">
-        <p>This is the Ingredients index page.</p>
-    </div>
     <div class="container">
         <a href="{{ route('ingredients.add') }}" class="btn btn-primary mt-3">Add New Ingredient</a>
     </div>
@@ -25,6 +22,7 @@
                 <tr>
                     <th scope="col">Name</th>
                     <th scope="col">Cost</th>
+                    <th scope="col">Unit</th>
                     <th scope="col">Actions</th>
                 </tr>
             </thead>
@@ -33,6 +31,7 @@
                     <tr>
                         <td>{{ $ingredient->name }}</td>
                         <td>{{ $ingredient->cost }}</td>
+                        <td>{{ $ingredient->unit }}</td>
                         <td>
                             <a href="{{ route('ingredients.edit', $ingredient->id) }}"
                                 class="btn btn-sm btn-warning">Edit</a>

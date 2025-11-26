@@ -22,10 +22,12 @@ class IngredientController extends Controller
     public function saveIngredient(IngredientRequest $request){
         $name = $request->input('name');
         $costFloat = floatval($request->input('cost'));
+        $unit = $request->input('unit');
 
         $ingredient = new Ingredient();
         $ingredient->name = $name;
         $ingredient->cost = $costFloat;
+        $ingredient->unit = $unit;
         $ingredient->save();
 
         return redirect()->route('ingredients.index');

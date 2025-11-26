@@ -10,6 +10,5 @@ class Ingredient extends Model
     //
     use HasFactory;
 
-    protected $fillable = ['name', 'cost'];
-    public $timestamps = false;
+    protected $fillable = ['name', 'cost', 'unit'];
 }
