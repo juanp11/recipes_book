@@ -1,59 +1,185 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Recipes Book
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Web application to manage cooking recipes with their ingredients, built with Laravel.
 
-## About Laravel
+## Prerequisites
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- PHP >= 8.2
+- Composer
+- MySQL or MariaDB (or any other database supported by Laravel)
+- Node.js and NPM (for frontend assets)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+> **Note:** This project uses MySQL as the primary database, but thanks to Laravel's migration system, it can work with other databases such as PostgreSQL, SQLite, or SQL Server with minimal configuration changes.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Installation
 
-## Learning Laravel
+### 1. Clone the repository
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+```bash
+git clone https://github.com/juanp11/recipes_book.git
+cd recipes_book
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 2. Install PHP dependencies
 
-## Laravel Sponsors
+```bash
+composer install
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 3. Install Node.js dependencies
 
-### Premium Partners
+```bash
+npm install
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### 4. Configure environment file
 
-## Contributing
+Copy the `.env.example` file to `.env`:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+copy .env.example .env
+```
 
-## Code of Conduct
+Edit the `.env` file and configure your database:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=recipes_book
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
+```
 
-## Security Vulnerabilities
+### 5. Generate application key
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+php artisan key:generate
+```
 
-## License
+### 6. Create the database
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Create the database in MySQL:
+
+```sql
+CREATE DATABASE recipes_book;
+```
+
+### 7. Run migrations
+
+Execute migrations to create tables in the database:
+
+```bash
+php artisan migrate
+```
+
+This will create the following tables:
+- `users` - System users
+- `recipes` - Recipes
+- `ingredients` - Ingredients
+- `recipe_ingredients` - Relationship between recipes and ingredients (with quantities)
+
+
+### 9. Compile assets
+
+For development:
+```bash
+npm run dev
+```
+
+For production:
+```bash
+npm run build
+```
+
+## Running the Server
+
+Start the Laravel development server:
+
+```bash
+php artisan serve
+```
+
+The application will be available at: `http://localhost:8000`
+
+## Database Structure
+
+### Table: recipes
+- `id` - Recipe ID
+- `title` - Recipe title
+- `instructions` - Preparation instructions
+- `preparation_time` - Preparation time
+- `servings` - Number of servings
+
+### Table: ingredients
+- `id` - Ingredient ID
+- `name` - Ingredient name
+- `unit` - Unit of measurement (grams, liters, etc.)
+
+### Table: recipe_ingredients
+- `recipe_id` - Recipe ID
+- `ingredient_id` - Ingredient ID
+- `quantity` - Ingredient quantity
+
+## Features
+
+- ✅ Create, list and view recipes
+- ✅ Manage ingredients
+- ✅ Associate multiple ingredients to each recipe
+- ✅ Specify ingredient quantities per recipe
+- ✅ View list of recipes and ingredients
+
+## Technologies Used
+
+- **Backend:** Laravel 11
+- **Frontend:** Blade Templates, Bootstrap 5
+- **Database:** MySQL
+- **Build Tools:** Vite
+
+## Architecture and Implementation Details
+
+### Many-to-Many Relationship
+
+The many-to-many relationship between recipes and ingredients is implemented through a pivot table called `recipe_ingredients`. This table connects both the `recipes` and `ingredients` tables using their respective IDs, and also stores the quantity of each ingredient needed for a specific recipe.
+
+### Application Logic
+
+**Ingredients Management:**
+- The `ingredients` table is populated independently, allowing you to create and manage ingredients separately from recipes.
+
+**Recipe Creation:**
+- A single form is used to create recipes, which handles both recipe data and ingredient associations.
+- The form features a dynamic interface that allows users to add or remove ingredients before saving the recipe.
+- Users can specify the quantity for each ingredient directly in the form.
+
+**Data Processing Flow:**
+1. When the form is submitted, the recipe data (title, instructions, preparation time, and servings) is saved first to the `recipes` table.
+2. The system retrieves the newly created recipe's ID.
+3. The ingredients and their quantities are received as arrays from the form.
+4. The system iterates through these arrays and inserts each ingredient into the `recipe_ingredients` pivot table with:
+   - The recipe ID
+   - The ingredient ID
+   - The quantity specified for that ingredient
+
+This approach ensures data integrity and allows for flexible recipe creation with multiple ingredients in a single operation.
+
+### Recipe Cost Calculation
+
+To calculate the total cost of a recipe, the system performs the following operations:
+
+1. **Database Query:** Queries the `recipe_ingredients` table filtering by recipe ID, performing a JOIN with the `ingredients` table using the ingredient ID.
+
+2. **Cost Calculation:** Iterates through the retrieved ingredients and:
+   - Multiplies the quantity from the `recipe_ingredients` table by the cost from the `ingredients` table
+   - Creates a new array that includes the ingredient data plus the calculated cost for that specific quantity
+   - Accumulates the individual ingredient costs to calculate the total recipe cost
+
+3. **Result:** Returns both the detailed cost breakdown per ingredient and the total cost of the recipe.
+
+This calculation method provides transparency in recipe pricing and helps users understand the cost distribution across different ingredients.
+
+**Reusability:** This cost calculation logic is implemented as a reusable function that can be called from different parts of the application, such as:
+- The recipe listing page (to display the total cost for each recipe in the list)
+- Individual recipe detail pages (to show both the total cost and the cost breakdown per ingredient)
+
+
